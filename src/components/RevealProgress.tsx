@@ -22,8 +22,9 @@ export function RevealProgress({
   return (
     <div className="progress-shell" aria-label={`カード ${current} / ${total}`}>
       <div className="progress-meta">
-        <span>{String(current).padStart(2, "0")}</span>
-        <span>{String(total).padStart(2, "0")}</span>
+        <span className="progress-count">
+          {current} / {total}
+        </span>
       </div>
       <div className="timeline-shell" aria-hidden="true">
         <div className="timeline-track">

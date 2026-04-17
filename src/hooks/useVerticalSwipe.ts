@@ -52,6 +52,10 @@ export function useVerticalSwipe({
       return;
     }
 
+    const container = event.currentTarget;
+    const styles = window.getComputedStyle(container);
+    const gap = Number.parseFloat(styles.getPropertyValue("--feed-gap")) || 0;
+    const advanceDistance = container.clientHeight + gap;
     const deltaY = event.clientY - startYRef.current;
     const shouldAdvance = deltaY <= -threshold;
 
@@ -60,16 +64,19 @@ export function useVerticalSwipe({
       pointerIdRef.current = null;
       setIsDragging(false);
       setIsAdvancing(true);
-      setDragOffset(-window.innerHeight);
+      setDragOffset(-advanceDistance);
 
       advanceTimeoutRef.current = window.setTimeout(() => {
-        onSwipeUp();
-        setIsAdvancing(false);
         setIsResetting(true);
-        setDragOffset(0);
+        onSwipeUp();
 
         resetFrameRef.current = window.requestAnimationFrame(() => {
-          setIsResetting(false);
+          setIsAdvancing(false);
+          setDragOffset(0);
+
+          resetFrameRef.current = window.requestAnimationFrame(() => {
+            setIsResetting(false);
+          });
         });
       }, advanceDurationMs);
 
