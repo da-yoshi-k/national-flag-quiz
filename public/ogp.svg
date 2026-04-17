@@ -9,10 +9,9 @@
   <circle cx="1020" cy="110" r="120" fill="#d97742" fill-opacity="0.14" />
   <circle cx="160" cy="560" r="190" fill="#7aa790" fill-opacity="0.16" />
   <rect x="88" y="86" width="1024" height="458" rx="36" fill="#fbf5ee" fill-opacity="0.82" stroke="#d8cdbd" />
-  <text x="140" y="170" fill="#6f7b86" font-size="30" font-family="Arial, sans-serif" letter-spacing="6">FLAG CARD</text>
   <text x="140" y="286" fill="#28333f" font-size="94" font-family="Arial, sans-serif" font-weight="700">国旗めくり</text>
-  <text x="140" y="368" fill="#56616c" font-size="40" font-family="Arial, sans-serif">国旗を見て、少し待って、国名を知る。</text>
-  <text x="140" y="424" fill="#56616c" font-size="40" font-family="Arial, sans-serif">縦スワイプで進める、国旗カード。</text>
+  <text x="140" y="368" fill="#56616c" font-size="40" font-family="Arial, sans-serif">国旗を見ながら、国の名前を覚える。</text>
+  <text x="140" y="424" fill="#56616c" font-size="40" font-family="Arial, sans-serif">縦スワイプで気軽にめくれるカード。</text>
   <rect x="140" y="468" width="300" height="10" rx="5" fill="#c9c0b4" />
   <rect x="452" y="468" width="150" height="10" rx="5" fill="#d97742" fill-opacity="0.72" />
   <rect x="614" y="468" width="120" height="10" rx="5" fill="#7aa790" fill-opacity="0.8" />
