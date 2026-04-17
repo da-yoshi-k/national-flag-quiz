@@ -22,6 +22,7 @@ type FeedItem =
 
 type VerticalFeedProps = {
   items: FeedItem[];
+  onLoop?: () => void;
 };
 
 function isCountryItem(item: FeedItem): item is CountryCard & { type: "country" } {
@@ -36,7 +37,7 @@ function renderSlide(item: FeedItem, stage: "hidden" | "revealed" | "detail") {
   return item.type === "intro" ? <IntroSlide /> : <OutroSlide />;
 }
 
-export function VerticalFeed({ items }: VerticalFeedProps) {
+export function VerticalFeed({ items, onLoop }: VerticalFeedProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const currentItem = items[currentIndex];
   const total = items.length;
@@ -45,7 +46,14 @@ export function VerticalFeed({ items }: VerticalFeedProps) {
   const nextItem = items[nextIndex];
 
   const goNext = () => {
-    setCurrentIndex((index) => (index + 1) % total);
+    setCurrentIndex((index) => {
+      if (index === total - 1) {
+        onLoop?.();
+        return 0;
+      }
+
+      return index + 1;
+    });
   };
 
   const { detailDelayMs, revealDelayMs, stage, timelineProgress, totalDurationMs } =
