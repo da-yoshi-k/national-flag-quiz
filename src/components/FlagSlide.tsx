@@ -4,17 +4,11 @@ import type { RevealStage } from "../hooks/useRevealTimer";
 type FlagSlideProps = {
   item: CountryCard;
   stage: RevealStage;
-  dragOffset: number;
 };
 
-export function FlagSlide({ item, stage, dragOffset }: FlagSlideProps) {
+export function FlagSlide({ item, stage }: FlagSlideProps) {
   return (
-    <article
-      className="flag-slide"
-      style={{ transform: `translateY(${dragOffset}px)` }}
-    >
-      <div className="flag-slide__glow flag-slide__glow--one" />
-      <div className="flag-slide__glow flag-slide__glow--two" />
+    <article className="flag-slide">
       <div className="flag-slide__label">国旗めくり</div>
       <div className="flag-slide__flag" aria-label={item.countryName}>
         {item.flagEmoji}
