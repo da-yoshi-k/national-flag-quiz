@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f4e6d8" />
+      <stop offset="100%" stop-color="#ddd6c8" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <circle cx="1020" cy="110" r="120" fill="#d97742" fill-opacity="0.14" />
+  <circle cx="160" cy="560" r="190" fill="#7aa790" fill-opacity="0.16" />
+  <rect x="88" y="86" width="1024" height="458" rx="36" fill="#fbf5ee" fill-opacity="0.82" stroke="#d8cdbd" />
+  <text x="140" y="170" fill="#6f7b86" font-size="30" font-family="Arial, sans-serif" letter-spacing="6">FLAG CARD</text>
+  <text x="140" y="286" fill="#28333f" font-size="94" font-family="Arial, sans-serif" font-weight="700">国旗めくり</text>
+  <text x="140" y="368" fill="#56616c" font-size="40" font-family="Arial, sans-serif">国旗を見て、少し待って、国名を知る。</text>
+  <text x="140" y="424" fill="#56616c" font-size="40" font-family="Arial, sans-serif">縦スワイプで進める、国旗カード。</text>
+  <rect x="140" y="468" width="300" height="10" rx="5" fill="#c9c0b4" />
+  <rect x="452" y="468" width="150" height="10" rx="5" fill="#d97742" fill-opacity="0.72" />
+  <rect x="614" y="468" width="120" height="10" rx="5" fill="#7aa790" fill-opacity="0.8" />
+  <circle cx="526" cy="473" r="14" fill="#fff8f1" stroke="#c98962" stroke-width="4" />
+  <text x="860" y="340" fill="#28333f" font-size="144">🌍</text>
+</svg>

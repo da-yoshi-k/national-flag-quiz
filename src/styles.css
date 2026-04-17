@@ -1,0 +1,256 @@
+:root {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic UI",
+    "Yu Gothic", "Meiryo", sans-serif;
+  color: #28333f;
+  background:
+    radial-gradient(circle at top, rgba(255, 185, 107, 0.28), transparent 28%),
+    radial-gradient(circle at bottom left, rgba(129, 178, 154, 0.22), transparent 30%),
+    linear-gradient(180deg, #f4e6d8 0%, #e8ddcf 46%, #ddd6c8 100%);
+  color-scheme: light;
+  --panel: rgba(253, 247, 238, 0.72);
+  --panel-border: rgba(86, 97, 108, 0.12);
+  --accent: #d97742;
+  --accent-strong: #c75b39;
+  --accent-cool: #7aa790;
+  --text-strong: #28333f;
+  --muted: rgba(40, 51, 63, 0.66);
+  --shadow: 0 24px 60px rgba(104, 83, 60, 0.14);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  min-height: 100vh;
+  overscroll-behavior: none;
+  color: var(--text-strong);
+}
+
+button {
+  font: inherit;
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+
+.feed-shell {
+  width: min(100%, 480px);
+  min-height: calc(100vh - 40px);
+  display: grid;
+  grid-template-rows: 1fr auto auto;
+  gap: 18px;
+  touch-action: none;
+  user-select: none;
+}
+
+.progress-shell {
+  display: grid;
+  gap: 10px;
+  margin-top: -6px;
+}
+
+.progress-meta {
+  display: flex;
+  justify-content: space-between;
+  font-family:
+    "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.78rem;
+  color: var(--muted);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.timeline-shell {
+  display: block;
+}
+
+.timeline-track {
+  position: relative;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  width: 100%;
+}
+
+.timeline-segment {
+  display: block;
+  flex: 0 0 auto;
+  height: 6px;
+  border-radius: 999px;
+}
+
+.timeline-segment--hidden {
+  background: rgba(76, 91, 107, 0.18);
+}
+
+.timeline-segment--revealed {
+  background: rgba(217, 119, 66, 0.6);
+}
+
+.timeline-segment--detail {
+  background: rgba(122, 167, 144, 0.76);
+}
+
+.timeline-pointer {
+  position: absolute;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  background: #fff8f1;
+  border: 2px solid #c98962;
+  box-shadow: 0 0 0 4px rgba(217, 119, 66, 0.18);
+  transform: translateY(-50%);
+  transition: left 120ms linear;
+}
+
+.flag-slide {
+  position: relative;
+  overflow: hidden;
+  border-radius: 36px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.48), transparent),
+    var(--panel);
+  border: 1px solid var(--panel-border);
+  box-shadow: var(--shadow);
+  padding: 28px 24px 32px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 0;
+  transition: transform 180ms ease;
+}
+
+.flag-slide__glow {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(20px);
+  opacity: 0.8;
+}
+
+.flag-slide__glow--one {
+  width: 180px;
+  height: 180px;
+  background: rgba(217, 119, 66, 0.18);
+  top: -20px;
+  right: -30px;
+}
+
+.flag-slide__glow--two {
+  width: 220px;
+  height: 220px;
+  background: rgba(122, 167, 144, 0.22);
+  bottom: -40px;
+  left: -60px;
+}
+
+.flag-slide__label {
+  position: relative;
+  z-index: 1;
+  justify-self: start;
+  border-radius: 999px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.5);
+  font-family:
+    "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.flag-slide__flag {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  align-self: center;
+  font-size: clamp(6rem, 24vw, 9rem);
+  line-height: 1;
+  text-shadow: 0 16px 32px rgba(112, 86, 59, 0.16);
+}
+
+.flag-slide__answer {
+  position: relative;
+  z-index: 1;
+  align-self: end;
+  display: grid;
+  gap: 10px;
+}
+
+.flag-slide__answer h1 {
+  margin: 0;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic UI",
+    "Yu Gothic", "Meiryo", sans-serif;
+  font-size: clamp(2.2rem, 8vw, 3.4rem);
+  line-height: 1.02;
+}
+
+.flag-slide__eyebrow {
+  margin: 0;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.flag-slide__details {
+  min-height: 48px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  color: var(--muted);
+}
+
+.flag-slide__answer--hidden .flag-slide__details {
+  opacity: 0.7;
+}
+
+.flag-slide__answer--revealed .flag-slide__details,
+.flag-slide__answer--detail .flag-slide__details {
+  opacity: 1;
+}
+
+.feed-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin-top: -4px;
+}
+
+.feed-footer p {
+  margin: 0;
+}
+
+@media (max-width: 560px) {
+  .app-shell {
+    padding: 14px;
+  }
+
+  .feed-shell {
+    min-height: calc(100vh - 28px);
+  }
+
+  .flag-slide {
+    padding: 22px 18px 26px;
+    border-radius: 28px;
+  }
+
+  .feed-footer {
+    font-size: 0.88rem;
+  }
+}
