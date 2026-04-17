@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { VerticalFeed } from "./components/VerticalFeed";
 import { countries } from "./data/countries";
 
@@ -17,6 +17,9 @@ function App() {
   const [selectedCountries, setSelectedCountries] = useState(() =>
     pickRandomCountries(countries, 8),
   );
+  const handleLoop = useCallback(() => {
+    setSelectedCountries(pickRandomCountries(countries, 8));
+  }, []);
   const items = [
     {
       id: "intro",
@@ -35,9 +38,7 @@ function App() {
   return (
     <VerticalFeed
       items={items}
-      onLoop={() => {
-        setSelectedCountries(pickRandomCountries(countries, 8));
-      }}
+      onLoop={handleLoop}
     />
   );
 }
