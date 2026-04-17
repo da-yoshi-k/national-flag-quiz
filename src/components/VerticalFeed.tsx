@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import type { CountryCard } from "../data/countries";
 import { useRevealTimer } from "../hooks/useRevealTimer";
 import { useVerticalSwipe } from "../hooks/useVerticalSwipe";
@@ -39,31 +39,53 @@ function renderSlide(item: FeedItem, stage: "hidden" | "revealed" | "detail") {
 
 export function VerticalFeed({ items, onLoop }: VerticalFeedProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const currentItem = items[currentIndex];
+  const [renderedCurrentIndex, setRenderedCurrentIndex] = useState(0);
+  const [renderedNextIndex, setRenderedNextIndex] = useState(1 % items.length);
+  const [loopCount, setLoopCount] = useState(0);
   const total = items.length;
   const totalCountryCount = items.filter(isCountryItem).length;
   const nextIndex = (currentIndex + 1) % total;
-  const nextItem = items[nextIndex];
+  const currentItem = items[renderedCurrentIndex];
+  const nextItem = items[renderedNextIndex];
 
   const goNext = () => {
-    setCurrentIndex((index) => {
-      if (index === total - 1) {
-        onLoop?.();
-        return 0;
-      }
+    if (currentIndex === total - 1) {
+      setCurrentIndex(0);
+      setLoopCount((count) => count + 1);
+      return;
+    }
 
-      return index + 1;
-    });
+    setCurrentIndex(currentIndex + 1);
   };
 
   const { detailDelayMs, revealDelayMs, stage, timelineProgress, totalDurationMs } =
     useRevealTimer({
       cardKey: currentItem.id,
     });
-  const { dragOffset, handlers, isAdvancing, isDragging, isResetting } =
+  const { dragOffset, handlers, isAdvancing, isDragging, isResetting, isSettling } =
     useVerticalSwipe({
       onSwipeUp: goNext,
     });
+
+  useLayoutEffect(() => {
+    if (isResetting) {
+      setRenderedCurrentIndex(currentIndex);
+    }
+  }, [currentIndex, isResetting]);
+
+  useEffect(() => {
+    if (!isAdvancing && !isResetting) {
+      setRenderedCurrentIndex(currentIndex);
+      setRenderedNextIndex(nextIndex);
+    }
+  }, [currentIndex, isAdvancing, isResetting, nextIndex]);
+
+  useEffect(() => {
+    if (loopCount > 0) {
+      onLoop?.();
+      setLoopCount(0);
+    }
+  }, [loopCount, onLoop]);
 
   return (
     <main className="app-shell">
@@ -74,6 +96,7 @@ export function VerticalFeed({ items, onLoop }: VerticalFeedProps) {
             isDragging ? "feed-stack--dragging" : "",
             isAdvancing ? "feed-stack--advancing" : "",
             isResetting ? "feed-stack--resetting" : "",
+            isSettling ? "feed-stack--settling" : "",
           ]
             .filter(Boolean)
             .join(" ")}
@@ -83,7 +106,7 @@ export function VerticalFeed({ items, onLoop }: VerticalFeedProps) {
             {renderSlide(currentItem, stage)}
             {isCountryItem(currentItem) ? (
               <RevealProgress
-                current={currentIndex}
+                current={renderedCurrentIndex}
                 total={totalCountryCount}
                 timelineProgress={timelineProgress}
                 revealDelayMs={revealDelayMs}
@@ -107,7 +130,7 @@ export function VerticalFeed({ items, onLoop }: VerticalFeedProps) {
             {renderSlide(nextItem, "hidden")}
             {isCountryItem(nextItem) ? (
               <RevealProgress
-                current={nextIndex}
+                current={renderedNextIndex}
                 total={totalCountryCount}
                 timelineProgress={0}
                 revealDelayMs={revealDelayMs}

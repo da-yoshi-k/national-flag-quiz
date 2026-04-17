@@ -2,6 +2,10 @@
 
 UI 練習用の国旗クイズです。`React + Vite + TypeScript` で構成し、縦スワイプで国旗カードを送るフラッシュカード風のミニアプリにしています。
 
+公開 URL:
+
+- https://da-yoshi-k.github.io/national-flag-quiz/
+
 ## Scripts
 
 - `npm install`

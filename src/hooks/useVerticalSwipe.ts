@@ -15,10 +15,12 @@ export function useVerticalSwipe({
   const pointerIdRef = useRef<number | null>(null);
   const advanceTimeoutRef = useRef<number | null>(null);
   const resetFrameRef = useRef<number | null>(null);
+  const settleTimeoutRef = useRef<number | null>(null);
   const [dragOffset, setDragOffset] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [isAdvancing, setIsAdvancing] = useState(false);
   const [isResetting, setIsResetting] = useState(false);
+  const [isSettling, setIsSettling] = useState(false);
 
   const handlePointerDown: React.PointerEventHandler<HTMLElement> = (event) => {
     if (isAdvancing) {
@@ -68,14 +70,18 @@ export function useVerticalSwipe({
 
       advanceTimeoutRef.current = window.setTimeout(() => {
         setIsResetting(true);
-        onSwipeUp();
 
         resetFrameRef.current = window.requestAnimationFrame(() => {
+          onSwipeUp();
           setIsAdvancing(false);
           setDragOffset(0);
 
           resetFrameRef.current = window.requestAnimationFrame(() => {
             setIsResetting(false);
+            setIsSettling(true);
+            settleTimeoutRef.current = window.setTimeout(() => {
+              setIsSettling(false);
+            }, 180);
           });
         });
       }, advanceDurationMs);
@@ -99,6 +105,10 @@ export function useVerticalSwipe({
       if (resetFrameRef.current !== null) {
         window.cancelAnimationFrame(resetFrameRef.current);
       }
+
+      if (settleTimeoutRef.current !== null) {
+        window.clearTimeout(settleTimeoutRef.current);
+      }
     };
   }, []);
 
@@ -107,6 +117,7 @@ export function useVerticalSwipe({
     isAdvancing,
     isDragging,
     isResetting,
+    isSettling,
     handlers: {
       onPointerCancel: handlePointerCancel,
       onPointerDown: handlePointerDown,
