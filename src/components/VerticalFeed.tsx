@@ -117,7 +117,13 @@ export function VerticalFeed({ items, onLoop }: VerticalFeedProps) {
               <div className="feed-spacer" aria-hidden="true" />
             )}
             <div className="feed-footer">
-              <p>
+              <p
+                className={
+                  !isCountryItem(currentItem) && currentItem.type === "intro"
+                    ? "feed-footer__hint"
+                    : undefined
+                }
+              >
                 {isCountryItem(currentItem)
                   ? "上にスワイプして次へ"
                   : currentItem.type === "intro"

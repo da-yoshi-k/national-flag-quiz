@@ -292,10 +292,10 @@ button {
 }
 
 .intro-slide__copy {
-  max-width: 26rem;
-  font-size: clamp(1.7rem, 6.6vw, 2.5rem);
+  max-width: 21rem;
+  font-size: clamp(1.28rem, 4vw, 1.72rem);
   font-weight: 700;
-  line-height: 1.3;
+  line-height: 1.36;
   letter-spacing: -0.01em;
   color: var(--text-strong);
 }
@@ -400,12 +400,28 @@ button {
   margin: 0;
 }
 
+.feed-footer__hint {
+  animation: swipe-hint-float 2.1s ease-in-out infinite;
+}
+
 .feed-footer--next {
   opacity: 0.68;
 }
 
 .feed-spacer {
   height: 24px;
+}
+
+@keyframes swipe-hint-float {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.72;
+  }
+  50% {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
 }
 
 @media (max-width: 560px) {
