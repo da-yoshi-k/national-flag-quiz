@@ -45,6 +45,7 @@ button {
 
 .feed-shell {
   --feed-gap: 18px;
+  position: relative;
   width: min(100%, 480px);
   height: calc(100svh - 42px);
   overflow: hidden;
@@ -129,6 +130,33 @@ button {
 
 .timeline-shell {
   display: block;
+  min-width: 0;
+  width: 100%;
+}
+
+.progress-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 6.8rem;
+  gap: 20px;
+  align-items: center;
+}
+
+.progress-action {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.progress-action__button {
+  border: 0;
+  border-radius: 999px;
+  width: 100%;
+  padding: 7px 11px;
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--text-strong);
+  font-size: 0.84rem;
+  line-height: 1;
+  white-space: nowrap;
+  box-shadow: 0 8px 20px rgba(104, 83, 60, 0.08);
 }
 
 .timeline-track {
@@ -424,6 +452,22 @@ button {
   }
 }
 
+@media (min-width: 900px) {
+  .outro-slide__body {
+    gap: 12px;
+    max-width: 26rem;
+  }
+
+  .outro-slide__body h1 {
+    font-size: 1.92rem;
+    line-height: 1.34;
+  }
+
+  .outro-slide__copy {
+    font-size: 0.96rem;
+  }
+}
+
 @media (max-width: 560px) {
   .app-shell {
     padding: 14px 14px 12px;
@@ -432,6 +476,16 @@ button {
   .feed-shell {
     --feed-gap: 14px;
     height: calc(100svh - 26px);
+  }
+
+  .progress-row {
+    grid-template-columns: minmax(0, 1fr) 6rem;
+    gap: 14px;
+  }
+
+  .progress-action__button {
+    padding: 7px 10px;
+    font-size: 0.8rem;
   }
 
   .feed-stack {
