@@ -2,12 +2,14 @@ import { useEffect, useRef, useState } from "react";
 
 type UseVerticalSwipeOptions = {
   onSwipeUp: () => void;
+  isDisabled?: boolean;
   threshold?: number;
   advanceDurationMs?: number;
 };
 
 export function useVerticalSwipe({
   onSwipeUp,
+  isDisabled = false,
   threshold = 90,
   advanceDurationMs = 280,
 }: UseVerticalSwipeOptions) {
@@ -23,7 +25,7 @@ export function useVerticalSwipe({
   const [isSettling, setIsSettling] = useState(false);
 
   const handlePointerDown: React.PointerEventHandler<HTMLElement> = (event) => {
-    if (isAdvancing) {
+    if (isAdvancing || isDisabled) {
       return;
     }
 
@@ -34,6 +36,10 @@ export function useVerticalSwipe({
   };
 
   const handlePointerMove: React.PointerEventHandler<HTMLElement> = (event) => {
+    if (isDisabled) {
+      return;
+    }
+
     if (pointerIdRef.current !== event.pointerId || startYRef.current === null) {
       return;
     }
@@ -50,6 +56,11 @@ export function useVerticalSwipe({
   };
 
   const handlePointerUp: React.PointerEventHandler<HTMLElement> = (event) => {
+    if (isDisabled) {
+      resetDrag();
+      return;
+    }
+
     if (pointerIdRef.current !== event.pointerId || startYRef.current === null) {
       return;
     }
@@ -95,6 +106,12 @@ export function useVerticalSwipe({
   const handlePointerCancel: React.PointerEventHandler<HTMLElement> = () => {
     resetDrag();
   };
+
+  useEffect(() => {
+    if (isDisabled) {
+      resetDrag();
+    }
+  }, [isDisabled]);
 
   useEffect(() => {
     return () => {

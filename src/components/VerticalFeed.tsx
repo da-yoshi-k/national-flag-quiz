@@ -42,6 +42,7 @@ export function VerticalFeed({ items, onLoop }: VerticalFeedProps) {
   const [renderedCurrentIndex, setRenderedCurrentIndex] = useState(0);
   const [renderedNextIndex, setRenderedNextIndex] = useState(1 % items.length);
   const [loopCount, setLoopCount] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
   const total = items.length;
   const totalCountryCount = items.filter(isCountryItem).length;
   const nextIndex = (currentIndex + 1) % total;
@@ -50,17 +51,20 @@ export function VerticalFeed({ items, onLoop }: VerticalFeedProps) {
 
   const goNext = () => {
     if (currentIndex === total - 1) {
+      setIsPaused(false);
       setCurrentIndex(0);
       setLoopCount((count) => count + 1);
       return;
     }
 
+    setIsPaused(false);
     setCurrentIndex(currentIndex + 1);
   };
 
   const { detailDelayMs, revealDelayMs, stage, timelineProgress, totalDurationMs } =
     useRevealTimer({
       cardKey: currentItem.id,
+      isPaused,
     });
   const { dragOffset, handlers, isAdvancing, isDragging, isResetting, isSettling } =
     useVerticalSwipe({
@@ -79,6 +83,10 @@ export function VerticalFeed({ items, onLoop }: VerticalFeedProps) {
       setRenderedNextIndex(nextIndex);
     }
   }, [currentIndex, isAdvancing, isResetting, nextIndex]);
+
+  useEffect(() => {
+    setIsPaused(false);
+  }, [currentIndex]);
 
   useEffect(() => {
     if (loopCount > 0) {
@@ -106,6 +114,21 @@ export function VerticalFeed({ items, onLoop }: VerticalFeedProps) {
             {renderSlide(currentItem, stage)}
             {isCountryItem(currentItem) ? (
               <RevealProgress
+                action={
+                  <button
+                    className="progress-action__button"
+                    type="button"
+                    onPointerDown={(event) => {
+                      event.stopPropagation();
+                    }}
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      setIsPaused((paused) => !paused);
+                    }}
+                  >
+                    {isPaused ? "再開" : "一時停止"}
+                  </button>
+                }
                 current={renderedCurrentIndex}
                 total={totalCountryCount}
                 timelineProgress={timelineProgress}
@@ -125,7 +148,9 @@ export function VerticalFeed({ items, onLoop }: VerticalFeedProps) {
                 }
               >
                 {isCountryItem(currentItem)
-                  ? "上にスワイプして次へ"
+                  ? isPaused
+                    ? "一時停止中"
+                    : "上にスワイプして次へ"
                   : currentItem.type === "intro"
                     ? "上にスワイプではじめる"
                     : "上にスワイプで最初へ"}

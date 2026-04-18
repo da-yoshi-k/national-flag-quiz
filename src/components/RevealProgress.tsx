@@ -1,4 +1,5 @@
 type RevealProgressProps = {
+  action?: React.ReactNode;
   current: number;
   total: number;
   timelineProgress: number;
@@ -8,6 +9,7 @@ type RevealProgressProps = {
 };
 
 export function RevealProgress({
+  action,
   current,
   total,
   timelineProgress,
@@ -26,25 +28,28 @@ export function RevealProgress({
           {current} / {total}
         </span>
       </div>
-      <div className="timeline-shell" aria-hidden="true">
-        <div className="timeline-track">
-          <div
-            className="timeline-segment timeline-segment--hidden"
-            style={{ width: `${hiddenWidth}%` }}
-          />
-          <div
-            className="timeline-segment timeline-segment--revealed"
-            style={{ width: `${revealedWidth}%` }}
-          />
-          <div
-            className="timeline-segment timeline-segment--detail"
-            style={{ width: `${detailWidth}%` }}
-          />
-          <div
-            className="timeline-pointer"
-            style={{ left: `calc(${timelineProgress * 100}% - 7px)` }}
-          />
+      <div className="progress-row">
+        <div className="timeline-shell" aria-hidden="true">
+          <div className="timeline-track">
+            <div
+              className="timeline-segment timeline-segment--hidden"
+              style={{ width: `${hiddenWidth}%` }}
+            />
+            <div
+              className="timeline-segment timeline-segment--revealed"
+              style={{ width: `${revealedWidth}%` }}
+            />
+            <div
+              className="timeline-segment timeline-segment--detail"
+              style={{ width: `${detailWidth}%` }}
+            />
+            <div
+              className="timeline-pointer"
+              style={{ left: `calc(${timelineProgress * 100}% - 7px)` }}
+            />
+          </div>
         </div>
+        {action ? <div className="progress-action">{action}</div> : null}
       </div>
     </div>
   );
